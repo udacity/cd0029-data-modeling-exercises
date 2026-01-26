@@ -10,6 +10,8 @@ import sys
 import io
 from datetime import datetime
 from faker import Faker
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 
 # Initialize Faker
 fake = Faker()
@@ -165,6 +167,25 @@ def create_tpcc_schema(conn, is_postgres=True):
     print("Tables created.")
 
 
+def create_tpcc_indexes(conn):
+    """Create indexes on TPC-C tables for PostgreSQL to improve OLTP performance."""
+    indexes = [
+        "CREATE INDEX IF NOT EXISTS idx_customer_wd ON tpcc.customer(c_w_id, c_d_id, c_id);",
+        "CREATE INDEX IF NOT EXISTS idx_district_wd ON tpcc.district(d_w_id, d_id);",
+        "CREATE INDEX IF NOT EXISTS idx_orders_wdc ON tpcc.orders(o_w_id, o_d_id, o_c_id);",
+        "CREATE INDEX IF NOT EXISTS idx_new_order_wd ON tpcc.new_order(no_w_id, no_d_id, no_o_id);",
+        "CREATE INDEX IF NOT EXISTS idx_order_line_wdo ON tpcc.order_line(ol_w_id, ol_d_id, ol_o_id);",
+        "CREATE INDEX IF NOT EXISTS idx_stock_wi ON tpcc.stock(s_w_id, s_i_id);",
+    ]
+    
+    print("Creating indexes on PostgreSQL tables...")
+    with conn.cursor() as cursor:
+        for idx in indexes:
+            cursor.execute(idx)
+    conn.commit()
+    print("Indexes created.")
+
+
 def generate_mock_data(scale_factor):
     """
     Generates mock data for TPC-C tables and returns dict of DataFrames.
@@ -262,7 +283,7 @@ def generate_mock_data(scale_factor):
                     "c_city": fake.city(),
                     "c_state": fake.state_abbr(),
                     "c_zip": fake.zipcode(),
-                    "c_phone": fake.phone_number(),
+                    "c_phone": fake.phone_number()[:16],
                     "c_since": fake.date_time_this_decade(),
                     "c_credit": "GC",
                     "c_credit_lim": 50000.00,
@@ -572,3 +593,78 @@ def run_benchmark(db_name, conn, sql_map, is_postgres, scale_factor, total_trans
     print(f"    New Order:    {tx_counts['new_order'] - tx_failures['new_order']} / {tx_counts['new_order']}")
     print(f"    Payment:      {tx_counts['payment'] - tx_failures['payment']} / {tx_counts['payment']}")
     print(f"    Order Status: {tx_counts['order_status'] - tx_failures['order_status']} / {tx_counts['order_status']}")
+
+
+def run_worker_transactions(worker_id, create_conn_func, sql_map, is_postgres, scale_factor, tx_per_worker):
+    """Worker function for concurrent benchmark - each worker gets its own connection."""
+    tx_counts = {"new_order": 0, "payment": 0, "order_status": 0}
+    tx_failures = {"new_order": 0, "payment": 0, "order_status": 0}
+    
+    # Each worker creates its own connection
+    conn = create_conn_func()
+    
+    try:
+        for i in range(tx_per_worker):
+            val = random.uniform(0, 100)
+            
+            if val <= 45:
+                tx_counts["new_order"] += 1
+                if not run_new_order(conn, sql_map, is_postgres, scale_factor):
+                    tx_failures["new_order"] += 1
+                    
+            elif val <= 90:
+                tx_counts["payment"] += 1
+                if not run_payment(conn, sql_map, is_postgres, scale_factor):
+                    tx_failures["payment"] += 1
+            
+            else:
+                tx_counts["order_status"] += 1
+                if not run_order_status(conn, sql_map, scale_factor):
+                    tx_failures["order_status"] += 1
+    finally:
+        conn.close()
+    
+    return tx_counts, tx_failures
+
+
+def run_concurrent_benchmark(db_name, create_conn_func, sql_map, is_postgres, scale_factor, 
+                             total_transactions=200, num_workers=4):
+    """Runs concurrent TPC-C benchmark with multiple workers."""
+    
+    print(f"\n--- Running Concurrent TPC-C Benchmark on {db_name} ---")
+    print(f"  Workers: {num_workers}")
+    print(f"  Total Transactions: {total_transactions}")
+    
+    tx_per_worker = total_transactions // num_workers
+    
+    all_tx_counts = {"new_order": 0, "payment": 0, "order_status": 0}
+    all_tx_failures = {"new_order": 0, "payment": 0, "order_status": 0}
+    
+    start_time = time.time()
+    
+    with ThreadPoolExecutor(max_workers=num_workers) as executor:
+        futures = [
+            executor.submit(run_worker_transactions, i, create_conn_func, sql_map, 
+                          is_postgres, scale_factor, tx_per_worker)
+            for i in range(num_workers)
+        ]
+        
+        for future in as_completed(futures):
+            tx_counts, tx_failures = future.result()
+            for key in all_tx_counts:
+                all_tx_counts[key] += tx_counts[key]
+                all_tx_failures[key] += tx_failures[key]
+    
+    end_time = time.time()
+    
+    total_time = end_time - start_time
+    tps = total_transactions / total_time
+    
+    print(f"--- {db_name} Concurrent Results ---")
+    print(f"  Total Transactions: {total_transactions}")
+    print(f"  Total Time: {total_time:.2f} seconds")
+    print(f"  Transactions Per Second (TPS): {tps:.2f}")
+    print("  Transaction Mix (Success/Total):")
+    print(f"    New Order:    {all_tx_counts['new_order'] - all_tx_failures['new_order']} / {all_tx_counts['new_order']}")
+    print(f"    Payment:      {all_tx_counts['payment'] - all_tx_failures['payment']} / {all_tx_counts['payment']}")
+    print(f"    Order Status: {all_tx_counts['order_status'] - all_tx_failures['order_status']} / {all_tx_counts['order_status']}")
