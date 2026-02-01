@@ -205,3 +205,14 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# nbgrader
+# Student submissions and grading artifacts
+submitted/
+autograded/
+feedback/
+gradebook.db
+gradebook.db.lock
+.nbgrader.log
+
+# Note: We don't gitignore release/ since our starter/ folders serve that purpose
