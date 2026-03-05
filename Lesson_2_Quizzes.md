@@ -70,15 +70,15 @@ Feedback:
 
 **Question 5:** A consultant reviews a company's tech stack and sees they use a NoSQL database that doesn't guarantee all four ACID properties. When might this trade-off be acceptable?
 - A) Never — all databases must be fully ACID-compliant
-- B) When the use case prioritizes speed and scalability over transactional guarantees (e.g., logging, caching, analytics)
+- B) When the use case prioritizes other aspects over transactional guarantees (e.g., logging, caching)
 - C) Only when using graph databases
 - D) When the data is stored in the cloud
 
-**Answer:** B) When the use case prioritizes speed and scalability over transactional guarantees (e.g., logging, caching, analytics)
-**Explanation:** ACID properties are essential for transactional workloads (banking, inventory), but some use cases like logging, caching, or high-throughput analytics can tolerate relaxed guarantees in exchange for performance and scalability. The course emphasizes polyglot persistence — different problems call for different database characteristics.
+**Answer:** B) When the use case prioritizes other aspects over transactional guarantees (e.g., logging, caching)
+**Explanation:** ACID properties are essential for transactional workloads (banking, inventory), but some use cases like logging, caching, or specific high-throughput analytics can tolerate relaxed guarantees in exchange for performance and scalability. The course emphasizes polyglot persistence — different problems call for different database characteristics.
 
 Feedback:
-- A) This is too rigid. Many successful systems (caching layers, event logs, analytics pipelines) operate without full ACID compliance because their use cases don't require it.
+- A) This is too rigid. Many successful systems (caching layers, event logs, high throughput analytics pipelines) operate without full ACID compliance because their use cases don't require it.
 - C) Graph databases can be ACID-compliant (Neo4j is). The trade-off depends on the use case, not the database category.
 - D) Cloud vs. on-premise is an infrastructure choice that doesn't determine whether ACID properties are needed. The decision depends on the workload characteristics.
 
@@ -107,8 +107,8 @@ Feedback:
 **Question 2:** Your grocery table has three rows for onions (red, yellow, green), each with a `price` column. Management announces a price increase for all onions. You update only the "red onion" row and forget the others. What anomaly occurred?
 - A) Insert anomaly
 - B) Delete anomaly
-- C) Update anomaly — the same logical fact (onion price) is stored in multiple places
-- D) Read anomaly — the query returned wrong results
+- C) Update anomaly 
+- D) Read anomaly 
 
 **Answer:** C) Update anomaly — the same logical fact (onion price) is stored in multiple places
 **Explanation:** "If someone says 'update the price of onions', which row should change? All types? Just one? It's unclear... These are read and update anomalies: situations where the table technically contains the right data, but the structure makes everyday operations ambiguous or inconsistent." The root cause is redundancy — the same fact is stored across multiple rows.
@@ -124,7 +124,7 @@ Feedback:
 - A) Insert anomaly
 - B) Update anomaly
 - C) Read anomaly
-- D) Delete anomaly — removing rows unintentionally erased other valuable information
+- D) Delete anomaly
 
 **Answer:** D) Delete anomaly — removing rows unintentionally erased other valuable information
 **Explanation:** "A deletion anomaly means that you can't delete a row without unintentionally erasing other valuable information." The price data was coupled with the inventory data in the same table, so deleting inventory also destroyed pricing information.
@@ -147,12 +147,12 @@ Feedback:
 
 Feedback:
 - A) Cost is not the primary issue. Even free training wouldn't fix structural problems in the data model.
-- C) "Databases don't allow training" doesn't make sense as a reason. The real issue is that no amount of user behavior change can fix a poorly structured table.
+- C) "Databases don't allow training" doesn't make sense as a reason - it's not even true, there are plenty of courses about databases. You're in one right now! The real issue is that no amount of user behavior change can fix a poorly structured table.
 - D) Both managers and developers interact with data, but the anomaly exists regardless of who performs the operation. The table's structure is the problem.
 
 ---
 
-**Question 5:** What is the general purpose of normalization in the context of CRUD anomalies?
+**Question 5:** What is the general purpose of normalization in the context of database CRUD anomalies?
 - A) Making all numbers positive
 - B) Organizing tables into standard structures (normal forms) so that each fact is stored once and anomalies are avoided
 - C) Deleting redundant databases
@@ -162,9 +162,9 @@ Feedback:
 **Explanation:** The lesson defines normalization as "the process of organizing tables into standard structures called normal forms so that the data model reflects the domain cleanly and avoids common anomalies." By storing each fact in exactly one place, insert, update, and delete anomalies are eliminated.
 
 Feedback:
-- A) "Making all numbers positive" describes a mathematical operation, not a database design process. Normalization refers to organizing table structures.
+- A) "Making all numbers positive" describes a mathematical operation, not a database design process. Normalization refers to organizing table structures in this context.
 - C) Normalization reorganizes tables within a database — it doesn't involve deleting entire databases.
-- D) Text case conversion is a data formatting concern. Normalization is about structural organization to eliminate redundancy and anomalies.
+- D) Text case conversion is a data formatting concern, so it doesn't make sense in this context. Normalization is about structural organization to eliminate redundancy and anomalies here.
 
 ---
 
@@ -190,7 +190,7 @@ Feedback:
 
 **Question 2:** You have a composite primary key of (store_id, item_name) on an inventory table. The `unit_price` column depends only on the item_name, not on which store carries it. Which normal form does this violate?
 - A) 1NF
-- B) 2NF — non-key columns must depend on the *entire* primary key, not just part of it
+- B) 2NF
 - C) 3NF
 - D) No violation
 
@@ -238,11 +238,11 @@ Feedback:
 
 **Question 5:** After normalizing a grocery table into separate `items`, `inventory`, and `price_history` tables, a developer complains that queries now require JOINs and are more complex. Is this a valid concern?
 - A) No — normalized tables always perform better
-- B) Yes — normalization trades some query complexity for data integrity and reduced anomalies, which is usually worth it for OLTP
+- B) Yes — normalization trades some read query complexity for data integrity and reduced anomalies, which is usually worth it for OLTP
 - C) No — JOINs have zero performance cost
 - D) Yes — you should never normalize data
 
-**Answer:** B) Yes — normalization trades some query complexity for data integrity and reduced anomalies, which is usually worth it for OLTP
+**Answer:** B) Yes — normalization trades some read query complexity for data integrity and reduced anomalies, which is usually worth it for OLTP
 **Explanation:** Normalization eliminates redundancy and anomalies, but it does introduce JOINs. This is a deliberate trade-off: write-heavy OLTP systems benefit from normalization (reduced update anomalies, smaller writes), while read-heavy OLAP systems sometimes denormalize for query performance — this is exactly why star and snowflake schemas exist.
 
 Feedback:
