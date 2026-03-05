@@ -282,7 +282,7 @@ Feedback:
 **Explanation:** A star schema consists of one or more central fact tables (containing measurable metrics and foreign keys) surrounded by dimension tables (containing descriptive attributes). The star-like pattern emerges from the fact table at the center connected to each dimension.
 
 Feedback:
-- A) Third Normal Form is a normalization standard for reducing redundancy in OLTP databases. Star schemas are intentionally denormalized for OLAP analytical queries.
+- A) Third Normal Form is a normalization standard for reducing redundancy in OLTP databases. Star schema dimnension tables are intentionally denormalized sometimes for OLAP analytical queries.
 - C) An Entity-Relationship Diagram is a visual modeling tool that shows entities and their relationships. It's a diagram technique, not a schema design pattern.
 - D) A graph database stores data as nodes and edges. The design described here — fact and dimension tables — is a relational schema pattern for analytics.
 
