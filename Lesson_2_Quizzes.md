@@ -306,7 +306,7 @@ Feedback:
 
 **Question 3:** The `dim_product` table contains a `product_category` field alongside product name, description, and price. A colleague suggests extracting `product_category` into its own `dim_category` table. What does this transformation create?
 - A) A simpler star schema
-- B) A snowflake schema — where dimension tables are further normalized into sub-dimensions
+- B) A snowflake schema 
 - C) A denormalized table
 - D) An OLTP schema
 
