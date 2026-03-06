@@ -7,11 +7,11 @@
 **Question 1:** You're modeling an e-commerce system where the most valuable insight is: "Customers who bought X also bought Y." Which database paradigm is purpose-built for this kind of relationship query?
 - A) A column-oriented data warehouse
 - B) A document store
-- C) A graph database — designed to traverse relationships between entities efficiently
+- C) A graph database
 - D) A flat file
 
 **Answer:** C) A graph database — designed to traverse relationships between entities efficiently
-**Explanation:** "A classic example is an e-commerce recommendation: 'Customers who bought X also bought Y.'" The lesson explains that graph databases excel when "the most important part of your data isn't the individual items—it's the relationships between them."
+**Explanation:** The lesson states that "graph databases treat connections between entities as first-class data" and are "widely used for problems where connections are the primary thing you care about, such as: social and communication networks, fraud detection and transaction analysis, recommendation systems." A recommendation like "bought X also bought Y" is a classic relationship traversal.
 
 Feedback:
 - A) Column-oriented data warehouses are optimized for aggregating large volumes of metrics (sums, averages). They aren't designed for traversing connections between entities.
@@ -20,19 +20,25 @@ Feedback:
 
 ---
 
-**Question 2:** What are the three building blocks of a graph database?
-- A) Tables, rows, columns
-- B) Nodes (entities), edges (relationships), and properties (attributes)
-- C) Documents, collections, fields
-- D) Keys, values, indexes
+**Question 2:** Match each graph database building block to its description.
 
-**Answer:** B) Nodes (entities), edges (relationships), and properties (attributes)
-**Explanation:** "A graph database represents data using three things: nodes, edges, and properties. Nodes are entities—people, products, places. Edges are the connections between them... Properties are attributes—names, dates, types."
+Column A:
+1. Nodes
+2. Edges (Relationships)
+3. Properties
+
+Column B:
+A. Entities like people, products, or documents
+B. Connections that describe how entities are related
+C. Attributes/data stored on both nodes and relationships
+
+**Answer:** 1→A, 2→B, 3→C
+**Explanation:** The lesson states: "a graph database stores three core components: Nodes, which represent entities—like people, products, or documents. Relationships, which represent how those entities are connected. And properties, which store data about both nodes and relationships."
 
 Feedback:
-- A) Tables, rows, and columns are the building blocks of relational databases, not graph databases.
-- C) Documents, collections, and fields are the building blocks of document stores like MongoDB.
-- D) Keys, values, and indexes describe key-value stores (like Redis) and general database indexing concepts, not graph-specific structures.
+- 1→A: Nodes are the fundamental entities in a graph — the "things" being modeled (people, products, documents, etc.).
+- 2→B: Edges (relationships) are the connections between nodes, describing how entities relate to each other (e.g., ACTED_IN, FRIENDS_WITH).
+- 3→C: Properties are key-value pairs that store data on both nodes (e.g., a person's name) and relationships (e.g., a role in a movie).
 
 ---
 
@@ -43,7 +49,7 @@ Feedback:
 - D) Graph databases don't require any queries
 
 **Answer:** B) In a graph, traversing relationships follows direct pointers — no scanning tables to match keys — making multi-hop queries natural and efficient
-**Explanation:** "In a graph, when you traverse a relationship, you're following a direct pointer or address. You don't scan all possible records to match conditions. In SQL, a JOIN typically involves scanning indexes or tables to match keys." For multi-hop relationship queries (fraud rings, social networks), graphs are fundamentally more efficient.
+**Explanation:** The lesson explains that "Each node and relationship stores direct references—essentially pointers—to its properties. And nodes and relationships also store references to each other. Because of this layout, the database does not need to search tables or perform joins in order to discover connections." For multi-hop relationship queries (fraud rings, social networks), graphs are fundamentally more efficient.
 
 Feedback:
 - A) Graph databases are not always faster for *all* queries. They excel specifically at relationship traversal. Aggregate calculations across millions of rows may be faster in columnar databases.
@@ -59,7 +65,7 @@ Feedback:
 - D) Ada Lovelace and the Bernoulli Numbers
 
 **Answer:** B) Leonhard Euler and the Seven Bridges of Königsberg
-**Explanation:** "The insight came from Leonhard Euler in 1736, who formalized what we now call the 'Seven Bridges of Königsberg problem'... Euler proved there was no route that crossed each bridge exactly once." This work laid the foundation for graph theory as a mathematical discipline.
+**Explanation:** The lesson describes how "mathematician Leonhard Euler recognized that this approach quickly becomes impractical" for the Seven Bridges of Königsberg problem, and instead represented it as a graph "where the land masses are 'nodes' and the bridges are 'edges'." Euler proved there was no valid path, laying the foundation for graph theory as a mathematical discipline.
 
 Feedback:
 - A) Alan Turing's Halting Problem (1936) is about computability theory, not graph theory. It asks whether a program can determine if another program will halt.
@@ -75,7 +81,7 @@ Feedback:
 - D) SPARQL 2.0
 
 **Answer:** B) GQL (Graph Query Language)
-**Explanation:** "In 2024, 'GQL'—Graph Query Language—was voted in as the new ISO standard for querying graphs, similar to how SQL is the standard for relational databases." This is a historic milestone — 37 years between the SQL standard and GQL.
+**Explanation:** The lesson states: "In 2024, the International Organization for Standardization released GQL, the Graph Query Language." It further notes: "It's the first new database language standard from ISO since SQL itself." This is a historic milestone — 37 years between the SQL standard and GQL.
 
 Feedback:
 - A) GraphQL is a Facebook-created API query language for web services, not a database query language or ISO standard for graph databases.
@@ -84,19 +90,20 @@ Feedback:
 
 ---
 
-**Question 6:** A consultant is evaluating database options for a new system that needs to handle recommendation engines, social network analysis, and supply-chain modeling. All three require traversing complex relationships. Which type of database systems should they evaluate?
-- A) Only relational databases like PostgreSQL
-- B) Graph databases such as Neo4j, Amazon Neptune, or Azure Cosmos DB
-- C) Only key-value stores like Redis
-- D) Only document stores like MongoDB
+**Question 6:** A consultant is evaluating database options for a new system. Which of the following are use cases where graph databases excel? (Select all that apply)
+- A) Recommendation engines
+- B) Social network analysis
+- C) Fraud detection
+- D) Simple key-value lookups
 
-**Answer:** B) Graph databases such as Neo4j, Amazon Neptune, or Azure Cosmos DB
-**Explanation:** The lesson lists "recommendation systems, fraud detection, supply-chain modeling, social networks" as graph database use cases and mentions "Example graph systems include Neo4j, Amazon Neptune, Google Spanner Graph, and Azure Cosmos DB." All three requirements are classic graph workloads.
+**Answer:** A, B, C
+**Explanation:** The lesson states that "graph databases are widely used for problems where connections are the primary thing you care about, such as: social and communication networks, fraud detection and transaction analysis, recommendation systems, and access control or network topology." It also notes: "All major cloud providers—AWS, Azure, Google Cloud—now offer managed graph database services."
 
 Feedback:
-- A) Relational databases can model relationships via JOINs, but multi-hop traversals across recommendations, social networks, and supply chains become prohibitively expensive with self-JOINs.
-- C) Key-value stores like Redis are optimized for simple lookups by key, not for traversing complex relationship patterns across multiple entity types.
-- D) Document stores like MongoDB handle flexible data well but aren't optimized for the multi-hop relationship traversals that recommendation engines and social networks require.
+- A) ✅ Recommendation engines ("customers who bought X also bought Y") rely on traversing purchase and preference relationships — a core graph database strength.
+- B) ✅ Social network analysis involves traversing connections between people (friends, followers, groups) — exactly the multi-hop relationship patterns graphs are built for.
+- C) ✅ Fraud detection requires discovering shared addresses, phone numbers, and transaction patterns across multiple hops — graphs handle this naturally through direct pointer traversal.
+- D) Simple key-value lookups (get a value by its key) are the domain of key-value stores like Redis, not graph databases. No relationship traversal is needed.
 
 ---
 
@@ -104,19 +111,22 @@ Feedback:
 
 ### **Quiz 2: Neo4j and Cypher Queries**
 
-**Question 1:** In Cypher, the query `MATCH (p:Person)-[:ACTED_IN]->(m:Movie) RETURN p.name, m.title` uses two types of syntax. What do the parentheses `()` and the square brackets with arrow `-[]->` represent?
-- A) Parentheses = properties; brackets = functions
-- B) Parentheses = nodes; square brackets with arrows = relationships (edges) with direction
-- C) Parentheses = tables; brackets = columns
-- D) Parentheses = collections; brackets = documents
+**Question 1:** In Cypher, the query `MATCH (p:Person)-[:ACTED_IN]->(m:Movie) RETURN p.name, m.title` uses two types of syntax. Match each syntax element to what it represents.
 
-**Answer:** B) Parentheses = nodes; square brackets with arrows = relationships (edges) with direction
-**Explanation:** "In Cypher, you use parentheses to represent nodes" and "square brackets with arrows represent edges. The arrow direction shows which way the relationship goes." So `(p:Person)` is a Person node, and `-[:ACTED_IN]->` is a directed "ACTED_IN" relationship.
+Column A:
+1. Parentheses `()`
+2. Square brackets with arrow `-[]->`
+
+Column B:
+A. Nodes
+B. Relationships (edges) with direction
+
+**Answer:** 1→A, 2→B
+**Explanation:** The lesson explains that "Nodes appear in parentheses, almost like a visual representation of the graph itself. Labels like 'Person' describe the type of node. The arrow represents a relationship." So `(p:Person)` is a Person node, and `-[:ACTED_IN]->` is a directed "ACTED_IN" relationship.
 
 Feedback:
-- A) Properties are stored *inside* nodes and relationships, not represented by parentheses. Parentheses denote nodes; brackets denote relationships.
-- C) Cypher doesn't use tables or columns. It's a graph query language where parentheses represent nodes and brackets represent edges.
-- D) Collections and documents are MongoDB concepts. Cypher uses parentheses for nodes and brackets for relationships in a graph model.
+- 1→A: Parentheses wrap nodes in Cypher — `(p:Person)` declares a node variable `p` with label `Person`. The visual shape of parentheses mirrors the circular representation of nodes in graph diagrams.
+- 2→B: Square brackets with arrows represent directed relationships — `-[:ACTED_IN]->` describes the relationship type and direction between two nodes.
 
 ---
 
@@ -127,7 +137,7 @@ Feedback:
 - D) MERGE — to create or find
 
 **Answer:** B) MATCH — to describe a pattern to find in the graph
-**Explanation:** "'Match' describes a pattern we're looking for... in plain English: find a person node that's connected to a movie node through an 'acted in' relationship." MATCH is the primary read operation in Cypher — you describe what the relationship pattern looks like, and Neo4j finds all matches.
+**Explanation:** The lesson states: "MATCH lets you specify the pattern to search for." MATCH is the primary read operation in Cypher — you describe what the relationship pattern looks like, and the database finds all matches.
 
 Feedback:
 - A) CREATE makes new nodes and relationships — it's a write operation, not a query for finding existing patterns.
@@ -143,7 +153,7 @@ Feedback:
 - D) Validates the match results
 
 **Answer:** B) Specifies what to give back — node properties, counts, aggregations, or the nodes themselves
-**Explanation:** "'Return' specifies what to give back. We could return the node itself, specific properties like name and title, or even counts and aggregations." RETURN is analogous to the SELECT clause in SQL — it controls the shape of the result set.
+**Explanation:** The lesson states: "RETURN defines the parts of the pattern—nodes, relationships, or properties—that should be included in the result." RETURN is analogous to the SELECT clause in SQL — it controls the shape of the result set.
 
 Feedback:
 - A) RETURN is a read operation that outputs results. It doesn't delete or modify any data in the graph.
@@ -159,7 +169,7 @@ Feedback:
 - D) DELETE — which removes existing nodes first
 
 **Answer:** C) MERGE — which creates only if the pattern doesn't already exist
-**Explanation:** "'Merge' is like 'create or find.' If the pattern already exists, Merge doesn't create a duplicate. Otherwise, it creates it." This is essential for data loading scenarios where you want idempotent operations that avoid duplicates.
+**Explanation:** The lesson introduces CREATE as "the keyword to create new data" and separately presents MERGE in the context of updates, where it's used to add relationships or nodes only when needed. Unlike CREATE — which always creates new elements — MERGE avoids duplicates by first checking whether the pattern already exists, making it essential for data loading scenarios with potential re-imports.
 
 Feedback:
 - A) CREATE always creates a new node, even if an identical one exists. Running it twice would create duplicates, which is exactly what you want to avoid during re-imports.
@@ -175,7 +185,7 @@ Feedback:
 - D) Cypher can only be used through a GUI, not written as text
 
 **Answer:** B) Cypher reads almost like plain English — "find a person named Alice, follow FRIENDS_WITH relationships, return the friends' names"
-**Explanation:** "Cypher reads almost like plain English. You can describe patterns you're looking for, and Neo4j will find matching structures in the graph." The visual pattern syntax (`()-[]->()`) is designed to be intuitive, especially for relationship-heavy queries.
+**Explanation:** The lesson states: "Cypher was designed to be readable and visual—so that the query mirrors the shape of the graph you're searching." The visual pattern syntax (`()-[]->()`) is designed to be intuitive, especially for relationship-heavy queries.
 
 Feedback:
 - A) Cypher is widely regarded as one of the most readable query languages. Its ASCII-art pattern syntax (`()-[]->()`) visually represents the graph structure being queried.
@@ -191,7 +201,7 @@ Feedback:
 - D) PUSH
 
 **Answer:** C) CREATE
-**Explanation:** "Creating data uses the 'create' command." In Cypher, CREATE can make individual nodes, nodes with properties, and relationships between nodes — all in a single statement using the same parentheses-and-brackets pattern syntax.
+**Explanation:** The lesson states: "In Cypher, the keyword to create new data is CREATE." CREATE can make individual nodes, nodes with properties, and relationships between nodes — all in a single statement using the same parentheses-and-brackets pattern syntax.
 
 Feedback:
 - A) INSERT is a SQL command. Cypher doesn't use INSERT — it uses CREATE for adding new nodes and relationships.
@@ -211,60 +221,66 @@ Feedback:
 - D) A replacement for Neo4j's query language
 
 **Answer:** B) A managed graph database service — handling provisioning, backups, replication, and recovery automatically
-**Explanation:** "AWS Neptune is the managed graph database service from Amazon. It's similar to how RDS provides managed relational databases." Neptune "handles the provisioning, backups, replication, and point-in-time recovery. You don't manage servers. You simply connect and query the graph."
+**Explanation:** The lesson describes Neptune as "a fully managed graph database service within the AWS ecosystem." It notes that "Neptune handles infrastructure management, high availability, backups, and integration with AWS tools for security, monitoring, and data ingestion."
 
 Feedback:
 - A) Neptune is not self-hosted or open-source. It's a fully managed AWS service. You don't install or maintain any database servers.
 - C) Neptune is a full graph database engine, not just a visualization tool. It stores, indexes, and queries graph data. Visualization is handled by separate tools.
-- D) Neptune doesn't replace Neo4j's query language. In fact, it supports openCypher (similar to Neo4j's Cypher), along with Gremlin and SPARQL.
+- D) Neptune doesn't replace Neo4j's query language. It supports languages like Cypher and Gremlin, as well as SPARQL for RDF-style graphs.
 
 ---
 
-**Question 2:** Neptune supports multiple query languages for different use cases. Which languages are available?
-- A) Only SQL
-- B) Gremlin, SPARQL, and openCypher
-- C) Only MQL (MongoDB Query Language)
-- D) Only Python
+**Question 2:** Neptune supports multiple query languages for different use cases. Which of the following query languages does Neptune support? (Select all that apply)
+- A) Gremlin
+- B) SPARQL
+- C) openCypher
+- D) SQL
+- E) MQL (MongoDB Query Language)
 
-**Answer:** B) Gremlin, SPARQL, and openCypher
-**Explanation:** "Neptune supports multiple query languages. The two main ones are Gremlin and SPARQL" and "Neptune also supports 'openCypher', which is similar to the Cypher language." This multi-language support makes Neptune flexible across different graph use cases.
+**Answer:** A, B, C
+**Explanation:** The lesson states that Neptune supports "multiple graph models and query languages, including property graphs queried with languages like Cypher and Gremlin, as well as RDF-style graphs queried with SPARQL." This multi-language support makes Neptune flexible across different graph use cases.
 
 Feedback:
-- A) SQL is for relational databases. Neptune is a graph database and uses graph-specific query languages (Gremlin, SPARQL, openCypher).
-- C) MQL (MongoDB Query Language) is for document stores, not graph databases. Neptune has no connection to MongoDB's query language.
-- D) Python is a general-purpose programming language, not a graph query language. You can use Python *drivers* to connect to Neptune, but the queries themselves are in Gremlin, SPARQL, or openCypher.
+- A) ✅ Gremlin is a graph traversal language supported by Neptune for querying property graphs.
+- B) ✅ SPARQL is supported by Neptune for querying RDF-style graphs.
+- C) ✅ openCypher is supported by Neptune as an additional language for querying property graphs.
+- D) SQL is for relational databases. Neptune is a graph database and uses graph-specific query languages.
+- E) MQL (MongoDB Query Language) is for document stores, not graph databases. Neptune has no connection to MongoDB's query language.
 
 ---
 
-**Question 3:** A developer describes Gremlin as a "step-by-step" approach to querying graphs. What kind of language is Gremlin?
-- A) A declarative language — you describe what you want
-- B) A graph traversal language — you describe how to traverse the graph step by step, following edges and filtering nodes
-- C) A data definition language
-- D) A markup language
+**Question 3:** Neptune supports two different graph data models. Match each graph data model to the query languages used with it.
 
-**Answer:** B) A graph traversal language — you describe how to traverse the graph step by step, following edges and filtering nodes
-**Explanation:** "Gremlin is a graph traversal language. You describe how to traverse the graph—step by step—following edges and filtering nodes." Unlike Cypher (which is more declarative — "find this pattern"), Gremlin is imperative — "start here, go to this edge, filter by this property."
+Column A:
+1. Property graphs
+2. RDF-style graphs
+
+Column B:
+A. Cypher and Gremlin
+B. SPARQL
+
+**Answer:** 1→A, 2→B
+**Explanation:** The lesson states that Neptune supports "multiple graph models and query languages, including property graphs queried with languages like Cypher and Gremlin, as well as RDF-style graphs queried with SPARQL." This distinction reflects two different graph data models, each with its own query language ecosystem.
 
 Feedback:
-- A) Declarative languages describe *what* you want (like SQL or Cypher). Gremlin is imperative/procedural — you describe *how* to traverse the graph step by step.
-- C) A data definition language (DDL) defines schemas (CREATE TABLE, ALTER TABLE). Gremlin is for querying and traversing graph data, not defining schemas.
-- D) A markup language (like HTML or XML) structures documents for display or data exchange. Gremlin is a query/traversal language for graph databases.
+- 1→A: Property graphs store data as nodes, relationships, and properties. They are queried using Cypher (a pattern-matching language) and Gremlin (a traversal-based language).
+- 2→B: RDF (Resource Description Framework) graphs store data as subject-predicate-object triples. SPARQL is the standard query language for this model.
 
 ---
 
-**Question 4:** A knowledge graph stores facts as triples like "Alice knows Bob" (subject, predicate, object). Which data format and query language are designed specifically for this kind of semantic data?
-- A) JSON and MQL
-- B) RDF (Resource Description Framework) and SPARQL
-- C) CSV and SQL
-- D) BSON and Gremlin
+**Question 4:** A team running an operational graph database on Neptune needs to perform large-scale analytics across the entire graph. According to the lesson, what does AWS offer to address this?
+- A) Running analytics directly on the operational Neptune instance with no performance impact
+- B) Neptune Analytics — a serverless analytics engine designed for large-scale graph analytics workloads
+- C) Exporting the graph to a relational database for analysis
+- D) There is no solution — graph databases cannot perform analytics
 
-**Answer:** B) RDF (Resource Description Framework) and SPARQL
-**Explanation:** "RDF stands for 'Resource Description Framework.' It's a format for representing data as 'triples': a subject, a predicate, and an object... for example: 'Alice, knows, Bob.'" SPARQL is "used for querying 'semantic data'" in RDF format. Together they form the backbone of semantic web and knowledge graph applications.
+**Answer:** B) Neptune Analytics — a serverless analytics engine designed for large-scale graph analytics workloads
+**Explanation:** The lesson describes "Neptune Analytics, a serverless analytics engine. It's designed for running large-scale graph analytics workloads that would be expensive or impractical to run directly on an operational graph database."
 
 Feedback:
-- A) JSON and MQL are used with document stores like MongoDB. They don't natively represent semantic triples (subject-predicate-object).
-- C) CSV and SQL are for flat/tabular and relational data. They lack the semantic triple structure that RDF provides for knowledge graphs.
-- D) BSON is MongoDB's binary JSON format, and Gremlin is a traversal language for property graphs. Neither is designed for semantic/triple-based data.
+- A) Running heavy analytics on an operational database can degrade transactional performance. Neptune Analytics exists specifically to offload these workloads to a dedicated engine.
+- C) Exporting to a relational database would lose the graph structure and relationships that make graph analytics valuable. Neptune Analytics keeps the data in graph form.
+- D) Graph analytics is very much possible — the lesson describes dedicated analytics offerings from both Neptune (Neptune Analytics) and Neo4j (Aura Graph Analytics).
 
 ---
 
@@ -275,7 +291,7 @@ Feedback:
 - D) Neptune uses a completely different data model than Neo4j
 
 **Answer:** B) Neptune is an AWS-native managed service that integrates seamlessly with the existing AWS ecosystem — backups, security, networking all work with familiar AWS tools
-**Explanation:** For teams already invested in AWS, Neptune offers the managed service benefits ("you don't manage servers") combined with native AWS integration — IAM for security, VPC for networking, CloudWatch for monitoring — reducing operational overhead compared to managing a separate Neo4j deployment.
+**Explanation:** The lesson describes Neptune as handling "infrastructure management, high availability, backups, and integration with AWS tools for security, monitoring, and data ingestion." For teams already invested in AWS, this native integration reduces operational overhead compared to managing a separate graph database deployment.
 
 Feedback:
 - A) Neptune isn't always cheaper. Costs depend on usage patterns, instance sizes, and workloads. The main advantage here is ecosystem integration and reduced operational burden, not cost.
@@ -291,7 +307,7 @@ Feedback:
 - D) A flat file
 
 **Answer:** C) A graph database — where traversing multi-hop relationships between people, companies, cities, and restaurants is a natural operation
-**Explanation:** This query involves traversing relationships across multiple entity types (people → companies, people → cities, people → restaurants). The lesson emphasizes that graph databases are designed for exactly this: "Sometimes the most important part of your data isn't the individual items—it's the relationships between them." Multi-hop pattern discovery is a core strength of graph databases.
+**Explanation:** This query involves traversing relationships across multiple entity types (people → companies, people → cities, people → restaurants). The lesson emphasizes that "graph databases treat connections between entities as first-class data" and are built for questions like "Who is connected to whom? How are these entities connected? and What paths or patterns exist across a network?" Multi-hop pattern discovery is a core strength of graph databases.
 
 Feedback:
 - A) Key-value stores are optimized for simple lookups by a single key. They can't traverse relationships between people, companies, cities, and restaurants.

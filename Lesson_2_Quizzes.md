@@ -59,7 +59,7 @@ Feedback:
 - D) Because isolation prevented the power failure from affecting data
 
 **Answer:** B) Because the data was written to persistent storage (disk), not volatile memory
-**Explanation:** "We achieve this by writing the data to some kind of permanent storage system, such as a hard disk—and not in RAM or 'volatile memory'. RAM needs continuous power, but a disk doesn't have that limitation." This is the Durability guarantee.
+**Explanation:** We achieve Durability by writing the data to some kind of permanent storage system, such as a hard disk—and not in RAM or 'volatile memory'. RAM needs continuous power, but a disk doesn't have that limitation. This is the Durability guarantee as it's typically defined.
 
 Feedback:
 - A) RAM is volatile memory — it loses all data when power is lost. If committed data were only in RAM, a power failure would destroy it.
@@ -68,19 +68,20 @@ Feedback:
 
 ---
 
-**Question 5:** A consultant reviews a company's tech stack and sees they use a NoSQL database that doesn't guarantee all four ACID properties. When might this trade-off be acceptable?
-- A) Never — all databases must be fully ACID-compliant
-- B) When the use case prioritizes other aspects over transactional guarantees (e.g., logging, caching)
-- C) Only when using graph databases
-- D) When the data is stored in the cloud
+**Question 5:** A consultant reviews a company's tech stack and sees they use a NoSQL database that doesn't guarantee all four ACID properties. In which of the following use cases might relaxed ACID compliance be an acceptable trade-off? (Select all that apply)
+- A) Banking and financial transactions
+- B) Application logging
+- C) Caching layers
+- D) Inventory management systems
 
-**Answer:** B) When the use case prioritizes other aspects over transactional guarantees (e.g., logging, caching)
+**Answer:** B, C
 **Explanation:** ACID properties are essential for transactional workloads (banking, inventory), but some use cases like logging, caching, or specific high-throughput analytics can tolerate relaxed guarantees in exchange for performance and scalability. The course emphasizes polyglot persistence — different problems call for different database characteristics.
 
 Feedback:
-- A) This is too rigid. Many successful systems (caching layers, event logs, high throughput analytics pipelines) operate without full ACID compliance because their use cases don't require it.
-- C) Graph databases can be ACID-compliant (Neo4j is). The trade-off depends on the use case, not the database category.
-- D) Cloud vs. on-premise is an infrastructure choice that doesn't determine whether ACID properties are needed. The decision depends on the workload characteristics.
+- A) Banking requires full ACID compliance — partial transactions or inconsistent reads could mean lost money or regulatory violations. This is not an acceptable trade-off.
+- B) ✅ Logging is a write-heavy, append-only workload where occasional data loss or ordering issues are tolerable. Performance and throughput matter more than strict transactional guarantees.
+- C) ✅ Caching layers prioritize speed and availability over consistency. Stale or lost cache entries are acceptable because the source of truth is elsewhere.
+- D) Inventory management tracks quantities that affect real business operations (e.g., overselling). ACID compliance is important here to prevent concurrent updates from creating incorrect stock counts.
 
 ---
 
@@ -111,7 +112,7 @@ Feedback:
 - D) Read anomaly 
 
 **Answer:** C) Update anomaly — the same logical fact (onion price) is stored in multiple places
-**Explanation:** "If someone says 'update the price of onions', which row should change? All types? Just one? It's unclear... These are read and update anomalies: situations where the table technically contains the right data, but the structure makes everyday operations ambiguous or inconsistent." The root cause is redundancy — the same fact is stored across multiple rows.
+**Explanation:** If someone says 'update the price of onions', which row should change? All types? Just one? It's unclear. These are read and update anomalies: situations where the table technically contains the right data, but the structure makes everyday operations ambiguous or inconsistent. The root cause is redundancy — the same fact is stored across multiple rows.
 
 Feedback:
 - A) An insert anomaly prevents adding data without supplying unrelated information. This scenario is about modifying existing data inconsistently.
@@ -127,7 +128,7 @@ Feedback:
 - D) Delete anomaly
 
 **Answer:** D) Delete anomaly — removing rows unintentionally erased other valuable information
-**Explanation:** "A deletion anomaly means that you can't delete a row without unintentionally erasing other valuable information." The price data was coupled with the inventory data in the same table, so deleting inventory also destroyed pricing information.
+**Explanation:** A deletion anomaly means that you can't delete a row without unintentionally erasing other valuable information. The price data was coupled with the inventory data in the same table, so deleting inventory also destroyed pricing information.
 
 Feedback:
 - A) An insert anomaly prevents adding new data without supplying unrelated required fields. This scenario is about losing data through deletion, not being unable to insert.
@@ -136,18 +137,19 @@ Feedback:
 
 ---
 
-**Question 4:** A colleague argues: "We just need to be more careful when updating data — training will fix these problems." Why is this not a reliable solution to CRUD anomalies?
-- A) Training is too expensive
-- B) Anomalies are structural problems in the data model, not human errors — they can't be solved by being more careful
-- C) Databases don't allow training
+**Question 4:** A colleague argues: "We just need to be more careful when updating data — training will fix these problems." Why is training alone not a reliable solution to CRUD anomalies? (Select all that apply)
+- A) Anomalies are structural problems in the data model, not human errors
+- B) Even a perfectly careful team will face ambiguity when the table structure makes operations unclear
+- C) Training is too expensive to implement
 - D) Only managers need training, not developers
 
-**Answer:** B) Anomalies are structural problems in the data model, not human errors — they can't be solved by being more careful
+**Answer:** A, B
 **Explanation:** CRUD anomalies arise from how the table is designed, not from user mistakes. Even a perfectly careful team will face ambiguity when the structure makes it unclear which of three onion rows to update. The solution is normalization — restructuring the tables to eliminate the root cause.
 
 Feedback:
-- A) Cost is not the primary issue. Even free training wouldn't fix structural problems in the data model.
-- C) "Databases don't allow training" doesn't make sense as a reason - it's not even true, there are plenty of courses about databases. You're in one right now! The real issue is that no amount of user behavior change can fix a poorly structured table.
+- A) ✅ The root cause of CRUD anomalies is the table's structure — redundancy and coupled data — not carelessness. No amount of training changes the data model.
+- B) ✅ When the same fact is stored in multiple places, even careful users face inherent ambiguity (e.g., which of three onion rows to update). The structure itself creates the problem.
+- C) Cost is not the primary issue. Even free training wouldn't fix structural problems in the data model.
 - D) Both managers and developers interact with data, but the anomaly exists regardless of who performs the operation. The table's structure is the problem.
 
 ---
@@ -288,19 +290,22 @@ Feedback:
 
 ---
 
-**Question 2:** In a star schema, the `fact_sales` table contains `sale_amount`, `quantity`, and foreign keys to dimension tables. What kind of data belongs in the fact table versus the dimension tables?
-- A) Fact tables store descriptions; dimension tables store numbers
-- B) Fact tables store measurable, quantitative metrics; dimension tables store descriptive attributes for filtering and grouping
-- C) Both store the same types of data
-- D) Fact tables store only primary keys
+**Question 2:** In a star schema, the `fact_sales` table contains `sale_amount`, `quantity`, and foreign keys to dimension tables. Match each type of data to the table where it belongs.
 
-**Answer:** B) Fact tables store measurable, quantitative metrics; dimension tables store descriptive attributes for filtering and grouping
+Column A:
+1. Measurable, quantitative metrics (e.g., sale_amount, quantity, costs)
+2. Descriptive attributes for filtering and grouping (e.g., product names, store locations, date components)
+
+Column B:
+A. Fact tables
+B. Dimension tables
+
+**Answer:** 1→A, 2→B
 **Explanation:** Fact tables hold business metrics (sales amounts, quantities, costs) and foreign keys linking to dimensions. Dimension tables hold attributes you filter or group by (product names, store locations, date components, customer demographics).
 
 Feedback:
-- A) This reverses the roles. Fact tables store numeric metrics; dimension tables store the descriptive context used for filtering and grouping.
-- C) Fact and dimension tables serve fundamentally different purposes — metrics vs. descriptive attributes. Conflating them defeats the purpose of the star schema design.
-- D) Fact tables store metrics and foreign keys, not just primary keys. The foreign keys link to dimension tables, but the metrics (sale_amount, quantity) are the core content.
+- 1→A: Fact tables are the central hub of a star schema, storing measurable, quantitative data like sale_amount and quantity. These are the numbers you aggregate in analytical queries.
+- 2→B: Dimension tables provide the descriptive context — the "who, what, where, when" — used to filter and group the metrics in the fact table.
 
 ---
 
@@ -372,7 +377,7 @@ Feedback:
 
 ---
 
-**Question 2:** An operations team wants to push a major database version upgrade without downtime. AWS offers a feature where a parallel environment is set up, tested, and traffic is switched over seamlessly. What is this called?
+**Question 2:** An operations team wants to push a major database version upgrade without downtime. AWS offers a feature where a parallel staging environment is set up, tested, and traffic is switched over seamlessly. What is this called?
 - A) Hot/Cold migration
 - B) Blue/Green Deployment
 - C) Sharding
@@ -403,17 +408,3 @@ Feedback:
 - D) Storing credentials inside the database creates a circular dependency and exposes them to anyone who can query the table.
 
 ---
-
-**Question 4:** Which of the following database engines does AWS RDS support?
-- A) Only PostgreSQL
-- B) PostgreSQL, MySQL, MariaDB, Oracle, and SQL Server among others
-- C) Only NoSQL databases
-- D) Only MongoDB
-
-**Answer:** B) PostgreSQL, MySQL, MariaDB, Oracle, and SQL Server among others
-**Explanation:** RDS supports multiple relational database engines, giving teams flexibility to choose the engine that best fits their needs while still benefiting from managed infrastructure.
-
-Feedback:
-- A) RDS supports many engines beyond PostgreSQL, including MySQL, MariaDB, Oracle, and SQL Server.
-- C) RDS is specifically for relational databases. AWS offers separate services for NoSQL (DynamoDB, DocumentDB, etc.).
-- D) MongoDB is a document database, not a relational one. AWS offers DocumentDB (with MongoDB compatibility) as a separate service, not through RDS.

@@ -6,12 +6,12 @@
 
 **Question 1:** A development team's data model changes frequently as the product evolves — new fields are added weekly, and some documents have attributes others don't. Which database paradigm is designed for this kind of flexibility?
 - A) A strictly normalized relational database
-- B) A document store (NoSQL) — where schemas are flexible and fields can vary between documents
+- B) A document store (NoSQL)
 - C) A graph database
 - D) A spreadsheet
 
 **Answer:** B) A document store (NoSQL) — where schemas are flexible and fields can vary between documents
-**Explanation:** The lesson explains that NoSQL databases were created because the idea was "to create databases that didn't force everything into a strict, predefined schema." In a document database, "if you want to add a note, leave a field blank, or tack on a new attribute you didn't plan for, you just do it. No schema changes, migrations, or table redesigns."
+**Explanation:** The lesson explains that document databases are "built on the opposite assumption: different documents might have different fields, and the structure can evolve over time." As the lesson notes, "businesses needed systems that could stay online as their schema changed. No downtime. No waiting for a DBA to run a migration. No strict table structures getting in the way."
 
 Feedback:
 - A) A strictly normalized relational database requires schema changes (ALTER TABLE, migrations) to add new fields — exactly the kind of friction this team wants to avoid.
@@ -22,7 +22,7 @@ Feedback:
 
 **Question 2:** MongoDB stores data internally as BSON. How does this relate to what developers interact with?
 - A) Developers must write raw binary code
-- B) BSON is binary JSON — MongoDB stores it as binary for efficiency, but developers interact with it as standard JSON
+- B) BSON is binary JSON 
 - C) BSON is completely unrelated to JSON
 - D) Developers must convert BSON manually before reading data
 
@@ -36,25 +36,31 @@ Feedback:
 
 ---
 
-**Question 3:** A relational database developer is learning MongoDB. They're used to "tables," "rows," and "columns." What are the MongoDB equivalents?
-- A) Graphs, nodes, edges
-- B) Collections, documents, fields
-- C) Buckets, objects, attributes
-- D) Schemas, records, keys
+**Question 3:** A relational database developer is learning MongoDB. They're used to "tables," "rows," and "columns." Match each relational database term to its MongoDB equivalent.
 
-**Answer:** B) Collections, documents, fields
+Column A:
+1. Table
+2. Row
+3. Column
+
+Column B:
+A. Collection
+B. Document
+C. Field
+
+**Answer:** 1→A, 2→B, 3→C
 **Explanation:** The lesson provides this mapping: "A 'collection' is roughly like a 'table'. A 'document' is roughly like a 'row'. Fields within a document behave a lot like columns." While the analogy isn't perfect (documents can have nested structures and variable fields), it helps relational developers build mental models.
 
 Feedback:
-- A) Graphs, nodes, and edges are the building blocks of graph databases (like Neo4j), not document stores like MongoDB.
-- C) "Buckets, objects, attributes" is not standard MongoDB terminology. MongoDB uses collections, documents, and fields.
-- D) "Schemas, records, keys" doesn't map to MongoDB's structure. MongoDB collections don't enforce schemas, and "records" isn't the preferred MongoDB term.
+- 1→A: A collection groups related documents together, similar to how a table groups related rows. Both serve as the organizational container for a set of records.
+- 2→B: A document is one record (a JSON/BSON object with key-value pairs), similar to how a row is one record in a relational table.
+- 3→C: A field is a key within a document, similar to how a column is a named attribute in a table’s row.
 
 ---
 
 **Question 4:** A security team wants to add a "login_attempts" field to user records, but only for users who have failed a login. In a relational database, you'd ALTER the table and add a nullable column. What's different in a document database?
 - A) You can't add new fields at all
-- B) You simply include the field in relevant documents — no schema change, no migration, no downtime
+- B) You simply include the field in relevant documents 
 - C) You must delete and recreate the entire collection
 - D) You need to create a new collection for users with failed logins
 
@@ -84,19 +90,20 @@ Feedback:
 
 ---
 
-**Question 6:** MongoDB was born from an ad platform handling 400,000 ads per second. DynamoDB was built to survive Amazon's holiday traffic spikes. Cassandra powered Facebook's inbox search. What common theme drove the creation of these NoSQL databases?
-- A) They were all built for small-scale applications
-- B) Each was designed to handle massive scale and workloads that traditional relational schemas couldn't accommodate efficiently
-- C) They all replaced SQL entirely
-- D) They were all created by the same company
+**Question 6:** The lesson describes several forces that drove the creation of document databases. Which of the following were driving forces behind the creation of document databases? (Select all that apply)
+- A) Businesses needed systems that could evolve without downtime or rigid schema migrations
+- B) Web, mobile, and event-driven systems produced unstructured or semi-structured data
+- C) Developers wanted simpler syntax than SQL
+- D) NoSQL databases were created to fully replace relational databases
 
-**Answer:** B) Each was designed to handle massive scale and workloads that traditional relational schemas couldn't accommodate efficiently
-**Explanation:** The lesson mentions these origin stories to highlight that NoSQL databases were purpose-built for extreme scale. "The principle was, to build a platform that could handle large volumes of unstructured data." Each system emerged from a real-world problem where traditional approaches hit their limits.
+**Answer:** A, B
+**Explanation:** The lesson states: "businesses needed systems that could stay online as their schema changed. No downtime. No waiting for a DBA to run a migration. No strict table structures getting in the way. These pressures led to a new type of database—one that stores entire documents, not rows." It also notes that "the web, mobile apps, and event-driven systems produce unstructured or semi-structured data—often in JSON format."
 
 Feedback:
-- A) The opposite is true — each was built specifically because small-scale solutions couldn't handle the volume (400K ads/sec, holiday spikes, billions of inbox messages).
-- C) None of these databases "replaced SQL entirely." SQL databases remain widely used alongside NoSQL. These tools serve different use cases.
-- D) MongoDB was created by 10gen, DynamoDB by Amazon, and Cassandra by Facebook. They were built by different companies facing different scale challenges.
+- A) ✅ The lesson explicitly describes the need for systems that "could stay online as their schema changed. No downtime. No waiting for a DBA to run a migration."
+- B) ✅ The lesson notes that "the web, mobile apps, and event-driven systems produce unstructured or semi-structured data—often in JSON format" as a key driver.
+- C) Syntax convenience was not the driving force. The lesson emphasizes operational flexibility, schema evolution, and the ability to handle unstructured and semi-structured data at scale.
+- D) The lesson clarifies that NoSQL stands for "not only SQL"—it refers to non-relational databases that complement, not replace, relational ones.
 
 ---
 
@@ -114,7 +121,7 @@ Feedback:
 **Explanation:** "The dollar sign tells MongoDB: 'What follows is an instruction, not data.'" This convention prevents ambiguity between operators and actual data values in update commands.
 
 Feedback:
-- A) `$` in MongoDB is not a variable reference (as it might be in shell scripting or PHP). It's a reserved prefix for MongoDB operators and expressions.
+- A) `$` in MongoDB is not a variable reference (as it might be in other languages you may hav seen). It's a reserved prefix for MongoDB operators and expressions.
 - C) Comments in MongoDB use `//` or are not part of the query syntax. The `$` prefix signals operators, not comments.
 - D) The `$` has no relationship to currency. It's a syntactic convention for distinguishing operators from data field names and values.
 
@@ -142,12 +149,12 @@ Feedback:
 - C) SQL can update fields; MongoDB cannot
 - D) There is no difference
 
-**Answer:** B) MongoDB operators surgically update only specified fields without rewriting the entire document; SQL rewrites the whole row
+**Answer:** B) MongoDB operators surgically update only specified fields without rewriting the entire document; SQL engines usually rewrite the whole row
 **Explanation:** "This is one of the biggest differences from SQL. MongoDB doesn't rewrite the whole row—MQL operators surgically update only what you specify." This targeted approach can be more efficient for documents with many fields when only one needs to change.
 
 Feedback:
 - A) Speed depends on the workload and implementation. MongoDB's surgical updates can actually be faster for targeted field changes on large documents.
-- C) Both SQL and MongoDB can update fields. The difference is in *how* — MongoDB targets specific fields while SQL conceptually replaces the entire row.
+- C) Both SQL and MongoDB can update fields. The difference is in *how* — MongoDB targets specific fields while SQL engines usually replace the entire row.
 - D) There is a significant architectural difference in how updates are processed, as the lesson explicitly highlights.
 
 ---
@@ -191,7 +198,7 @@ Feedback:
 **Question 1:** A product manager wants to see monthly revenue broken down by product category for the past year. In MongoDB, which feature would you use to build this multi-step analysis?
 - A) A simple find() query
 - B) An aggregation pipeline — a sequence of stages that filter, reshape, group, and sort documents
-- C) A mapReduce function
+- C) A map-Reduce function
 - D) A manual export to spreadsheet
 
 **Answer:** B) An aggregation pipeline — a sequence of stages that filter, reshape, group, and sort documents
@@ -199,24 +206,33 @@ Feedback:
 
 Feedback:
 - A) A simple `find()` query can filter and return documents, but it can't group, aggregate, reshape, or compute metrics like monthly revenue breakdowns.
-- C) `mapReduce` is an older MongoDB feature for data processing. Aggregation pipelines are the modern, preferred approach — more flexible, better optimized, and easier to compose.
+- C) `map-Reduce` is an older MongoDB feature for data processing. Aggregation pipelines are the modern, preferred approach — more flexible, better optimized, and easier to compose.
 - D) Exporting to a spreadsheet moves analysis outside the database, defeating the purpose of using MongoDB's built-in capabilities for performant in-database processing.
 
 ---
 
-**Question 2:** You need to enrich each order document with matching customer information from a separate collection. Which aggregation pipeline stage performs this, and what SQL operation is it similar to?
-- A) `$group` — similar to GROUP BY
-- B) `$lookup` — similar to a LEFT OUTER JOIN
-- C) `$match` — similar to WHERE
-- D) `$sort` — similar to ORDER BY
+**Question 2:** You need to enrich each order document with matching customer information from a separate collection. Match each aggregation pipeline stage to the SQL operation it is most similar to.
 
-**Answer:** B) `$lookup` — similar to a LEFT OUTER JOIN
-**Explanation:** "The 'lookup' stage performs an operation similar to a left outer join between two collections. In this example, it enriches each 'order' document by attaching matching documents from 'customers'."
+Column A:
+1. `$group`
+2. `$lookup`
+3. `$match`
+4. `$sort`
+
+Column B:
+A. GROUP BY
+B. LEFT OUTER JOIN
+C. WHERE
+D. ORDER BY
+
+**Answer:** 1→A, 2→B, 3→C, 4→D
+**Explanation:** "The 'lookup' stage performs an operation similar to a left outer join between two collections." Each aggregation stage has a direct SQL analog: `$group` groups documents by a key (GROUP BY), `$lookup` joins data from another collection (LEFT OUTER JOIN), `$match` filters documents (WHERE), and `$sort` orders results (ORDER BY).
 
 Feedback:
-- A) `$group` aggregates documents by a key (like SQL's GROUP BY). It doesn't join data from separate collections.
-- C) `$match` filters documents within a single collection (like SQL's WHERE). It can't pull in data from another collection.
-- D) `$sort` orders results (like SQL's ORDER BY). It operates on existing fields and doesn't introduce data from other collections.
+- 1→A: `$group` aggregates documents by a specified key, producing one output document per group — directly analogous to SQL's GROUP BY clause.
+- 2→B: `$lookup` enriches documents by pulling in matching documents from another collection — the lesson explicitly compares it to a LEFT OUTER JOIN.
+- 3→C: `$match` filters documents based on criteria, passing only matching documents to the next stage — equivalent to SQL's WHERE clause.
+- 4→D: `$sort` orders the result set by specified fields — equivalent to SQL's ORDER BY clause.
 
 ---
 
@@ -227,7 +243,7 @@ Feedback:
 - D) There's no issue — `$lookup` and SQL JOINs perform identically
 
 **Answer:** B) Unlike optimized SQL joins, `$lookup` is more expensive — it's powerful but not something to rely on for every query
-**Explanation:** The lesson warns: "It's powerful—but not free. Unlike optimized SQL joins, MongoDB's 'lookup' is more expensive. It's powerful, but not something you rely on for every query." Document databases are designed to minimize the need for joins by embedding related data — heavy `$lookup` use may indicate a modeling problem.
+**Explanation:** The lesson warns: it's powerful—but not free. Unlike optimized SQL joins, MongoDB's 'lookup' is more expensive. It's powerful, but not something you rely on for every query. Document databases are designed to minimize the need for joins by embedding related data — heavy `$lookup` use may indicate a modeling problem.
 
 Feedback:
 - A) `$lookup` absolutely exists in MongoDB and is a core aggregation pipeline stage for cross-collection operations.
@@ -272,46 +288,47 @@ Feedback:
 
 ### **Quiz 4: MongoDB Atlas and Cloud NoSQL**
 
-**Question 1:** A team currently runs MongoDB locally. They want to move to a managed service where infrastructure, backups, and patching are handled automatically. What type of cloud service is MongoDB Atlas?
-- A) IaaS (Infrastructure as a Service) — you manage virtual machines
-- B) PaaS (Platform as a Service) — a fully managed database where you don't manage underlying infrastructure
-- C) SaaS (Software as a Service) — a desktop application
-- D) A self-hosted solution
+**Question 1:** A team currently runs MongoDB on their own servers. They find that managing infrastructure, replication, backups, and patching takes significant effort. Which of the following does MongoDB Atlas provide? (Select all that apply)
+- A) A fully managed MongoDB experience
+- B) Replication, sharding, backups, and monitoring
+- C) Deployment across multiple cloud providers (AWS, GCP, Azure)
+- D) A relational database wrapper around MongoDB
 
-**Answer:** B) PaaS (Platform as a Service) — a fully managed database where you don't manage underlying infrastructure
-**Explanation:** "MongoDB Atlas is the managed version of MongoDB... PaaS stands for Platform as a Service. It means you're renting a fully managed database, not just bare computing hardware."
+**Answer:** A, B, C
+**Explanation:** The lesson describes MongoDB Atlas as "the official cloud service from the developers of MongoDB" that "provides a fully managed MongoDB experience, including replication, sharding, backups, and monitoring." It also notes that "Atlas also lets you deploy to several cloud infrastructure vendors, such as AWS, Google Cloud Platform, or Azure."
 
 Feedback:
-- A) IaaS provides raw virtual machines that you manage yourself (OS, patches, database installation). Atlas handles all of that for you, making it PaaS.
-- C) SaaS is end-user software (like Gmail or Salesforce). Atlas is a platform for developers to build on, not a consumer application.
-- D) Atlas is the managed cloud version of MongoDB — it's the opposite of self-hosted, with infrastructure managed by MongoDB Inc.
+- A) ✅ Atlas is "the official cloud service from the developers of MongoDB" providing a "fully managed MongoDB experience."
+- B) ✅ The lesson explicitly states Atlas includes "replication, sharding, backups, and monitoring" as managed features.
+- C) ✅ The lesson notes Atlas "lets you deploy to several cloud infrastructure vendors, such as AWS, Google Cloud Platform, or Azure."
+- D) Atlas runs MongoDB natively — it's not a relational wrapper. It provides the full MongoDB document model and query capabilities.
 
 ---
 
-**Question 2:** Your MongoDB Atlas workload is growing and queries are slowing down. The database runs on a single tier with limited CPU and RAM. What does "scaling up" mean in this context?
-- A) Adding more collections
-- B) Moving to a higher tier with more CPU cores and RAM so each request gets more resources
-- C) Deleting old data
-- D) Adding more developers
+**Question 2:** Your MongoDB Atlas cluster needs to handle varying workloads without constant manual intervention. According to the lesson, how does Atlas help manage changing resource demands?
+- A) By requiring manual capacity planning for every workload change
+- B) By autoscaling compute and storage based on usage patterns
+- C) By deleting old data automatically when storage is full
+- D) By limiting the number of concurrent queries
 
-**Answer:** B) Moving to a higher tier with more CPU cores and RAM so each request gets more resources
-**Explanation:** "Scaling up means choosing a higher tier—more CPU cores and more RAM—so each request gets more resources." This is vertical scaling — making one machine more powerful.
+**Answer:** B) By autoscaling compute and storage based on usage patterns
+**Explanation:** The lesson states that with Atlas, "you can autoscale your cluster's compute and storage based on usage patterns, so you don't have to constantly guess at the right instance sizes or worry about running out of capacity."
 
 Feedback:
-- A) Adding more collections doesn't increase compute resources. Collections are logical groupings of documents, not a way to add CPU or memory.
-- C) Deleting old data frees storage but doesn't address CPU or RAM bottlenecks. Slow queries need more compute resources, not just free space.
-- D) Adding more developers doesn't improve database performance. Scaling up means increasing the hardware resources available to the database.
+- A) Atlas specifically reduces the need for manual capacity planning. The lesson highlights that autoscaling means you "don't have to constantly guess at the right instance sizes."
+- C) Atlas autoscales resources — it doesn't delete data to free space. Storage scaling is handled automatically based on demand patterns.
+- D) Atlas handles workload scaling, not query throttling. Autoscaling adjusts compute and storage resources to match actual usage, not limit it.
 
 ---
 
 **Question 3:** A single MongoDB server is hitting its storage and throughput limits. You need to distribute data across multiple machines. What is this called in MongoDB?
 - A) Replication
-- B) Sharding — splitting data across multiple machines to scale horizontally
+- B) Sharding 
 - C) Indexing
 - D) Aggregation
 
 **Answer:** B) Sharding — splitting data across multiple machines to scale horizontally
-**Explanation:** "Sharding is the term MongoDB uses for splitting your data across multiple machines to scale horizontally.... Sharding addresses one machine's limits by distributing the data across multiple machines." This is horizontal scaling — adding more machines rather than making one bigger.
+**Explanation:** Sharding is the term MongoDB uses for splitting your data across multiple machines to scale horizontally. Sharding addresses one machine's limits by distributing the data across multiple machines. This is horizontal scaling — adding more machines rather than making one bigger.
 
 Feedback:
 - A) Replication creates copies of data for redundancy and read scaling, but each replica holds the full dataset. It doesn't distribute data across machines to overcome storage limits.
@@ -320,32 +337,18 @@ Feedback:
 
 ---
 
-**Question 4:** A solutions architect is comparing MongoDB Atlas and AWS DynamoDB for a new project on AWS. What architectural difference should they consider?
-- A) They're architecturally identical
-- B) DynamoDB is built into AWS natively and scales seamlessly within the ecosystem; MongoDB Atlas runs on virtual machines and operates more independently
-- C) MongoDB Atlas is always faster
-- D) DynamoDB doesn't support NoSQL workloads
+**Question 4:** A solutions architect is comparing MongoDB Atlas and Amazon DynamoDB for a new project. Based on the lesson, what is a key difference between these two services?
+- A) They are identical in architecture and capabilities
+- B) Atlas can deploy across multiple cloud providers (AWS, GCP, Azure), while DynamoDB offers a serverless integrated AWS experience with more constrained access patterns but extremely low operational overhead
+- C) DynamoDB supports all MongoDB features
+- D) Atlas only runs on AWS
 
-**Answer:** B) DynamoDB is built into AWS natively and scales seamlessly within the ecosystem; MongoDB Atlas runs on virtual machines and operates more independently
-**Explanation:** "DynamoDB is built into AWS at a deeper level. MongoDB Atlas runs on virtual machines. In contrast, DynamoDB is more like AWS's own service that doesn't rely on those virtual machines in the same way." This affects scaling behavior, pricing models, and integration with other AWS services.
+**Answer:** B) Atlas can deploy across multiple cloud providers (AWS, GCP, Azure), while DynamoDB offers a serverless AWS experience with more constrained access patterns but extremely low operational overhead
+**Explanation:** The lesson describes Atlas as letting you "deploy to several cloud infrastructure vendors, such as AWS, Google Cloud Platform, or Azure." For DynamoDB, the lesson notes it "offers a 'serverless' experience—you don't manage instances or clusters at all" and "makes different tradeoffs than MongoDB: access patterns are more constrained, but operational overhead is extremely low."
 
 Feedback:
-- A) They have fundamentally different architectures. DynamoDB is AWS-native serverless; Atlas runs on provisioned VMs. This impacts scaling, pricing, and integration.
-- C) Performance depends on the workload, configuration, and access patterns. Neither is categorically faster — they excel at different things.
-- D) DynamoDB is a NoSQL key-value/document store. Both Atlas and DynamoDB support NoSQL workloads, just with different architectures.
+- A) They have fundamentally different architectures and deployment models. Atlas is multi-cloud with managed clusters; DynamoDB is AWS-only and serverless. Their access patterns and tradeoffs differ significantly.
+- C) DynamoDB makes different tradeoffs than MongoDB — access patterns are more constrained. They are distinct database services with different capabilities and query models.
+- D) Atlas explicitly supports multiple cloud providers — AWS, Google Cloud Platform, and Azure — as stated in the lesson.
 
 ---
-
-**Question 5:** DynamoDB uses "capacity units" to meter usage. What analogy does the lesson use to explain this concept, and what does it mean practically?
-- A) Like buying gas — you pay per gallon stored
-- B) Like tokens at an arcade — you spend read/write capacity units each time you interact with data
-- C) Like electricity — you pay a flat monthly rate
-- D) Like a subscription — unlimited usage for a fixed price
-
-**Answer:** B) Like tokens at an arcade — you spend read/write capacity units each time you interact with data
-**Explanation:** "Think of capacity like tokens at an arcade. You spend a specific number to use a machine. In DynamoDB, you spend read capacity units and write capacity units every time you interact with data." This pay-per-interaction model requires capacity planning to avoid throttling.
-
-Feedback:
-- A) DynamoDB charges per read/write operation (capacity units), not per volume of data stored. Storage is billed separately.
-- C) DynamoDB's provisioned capacity mode charges based on throughput capacity reserved, not a flat rate regardless of usage. On-demand mode charges per request.
-- D) DynamoDB is usage-based, not unlimited. Exceeding provisioned capacity results in throttling. You must plan capacity or use on-demand mode.

@@ -22,11 +22,11 @@ Feedback:
 
 **Question 2:** A data engineer tells you: "By some estimates, 90% of the world's data was generated in the last two years alone." Which of the following best explains why this statistic matters for data modeling?
 - A) It means older data is no longer useful, and we should abandon or delete older data
-- B) The volume, velocity, and variety of data demand intentional structure with schema changes in mind so it remains usable
+- B) The volume, velocity, and variety of data demand intentional structure with schema changes and evolution in mind so systems remains usable
 - C) It proves that relational databases are obsolete, and we should move to NoSQL databases
 - D) It means all data should be stored in the cloud, in order to make sure data storage can scale
 
-**Answer:** B) The volume, velocity, and variety of data demand intentional structure with schema changes in mind so it remains usable
+**Answer:** B) The volume, velocity, and variety of data demand intentional structure with schema changes and evolution in mind so systems remains usable
 **Explanation:** The lesson stresses that "data modeling means giving raw data some structure, so it actually reflects the real things we're studying." As data volume explodes, the need for good models increases — without structure, data becomes noise. The 5 Vs (volume, velocity, variety, veracity, value) are mentioned as characteristics of modern data challenges.
 
 Feedback:
@@ -43,7 +43,7 @@ Feedback:
 - D) A query engine
 
 **Answer:** C) A digital twin
-**Explanation:** The lesson introduces the concept of a "digital twin" — "a digital model constructed from data that represents real-life things like buildings or cities." A factory floor simulation built on sensor data is a textbook example. The lesson also asks learners to "think about the amount of data needed to build a 'digital twin' model of a city for engineering uses."
+**Explanation:** The concept of a "digital twin" is a digital model constructed from data that represents real-life things like buildings or cities. A factory floor simulation built on sensor data is a textbook example. 
 
 Feedback:
 - A) An OLAP cube is a multidimensional data structure for analytical queries, not a simulation of a physical environment.
@@ -130,7 +130,7 @@ Feedback:
 
 **Answer:** C) Metadata — specifically, type constraints
 
-**Explanation:** "By giving the column a numeric type, PostgreSQL automatically rejects anything that isn't a valid number. If you try to insert 'Pear' into that column, the database stops you immediately. That's metadata doing its job." Metadata includes type constraints, domain rules, and other structural definitions that protect the integrity of data.
+**Explanation:** Recall from our lesson - by giving the column a type - in this case numeric - PostgreSQL automatically rejects anything that isn't a valid number. If you try to insert 'Pear' into that column, the database stops you immediately. Metadata includes type constraints, domain rules, and other structural definitions that protect the integrity of data.
 
 Feedback:
 - A) The optimizer decides *how* to execute queries efficiently, not whether data is valid.
@@ -226,49 +226,54 @@ Feedback:
 
 ---
 
-**Question 3:** A financial services company needs two systems: one for real-time trade execution and another for end-of-month regulatory reporting across millions of records. Which combination makes the most sense?
-- A) Two OLAP systems
-- B) A row-oriented OLTP system for trade execution, and a column-oriented OLAP system for reporting
-- C) Two graph databases
-- D) A single row-oriented database for both use cases
+**Question 3:** A financial services company needs two systems: one for real-time trade execution and another for end-of-month regulatory reporting across millions of records. Match each use case to the most appropriate system architecture.
 
-**Answer:** B) A row-oriented OLTP system for trade execution, and a column-oriented OLAP system for reporting
-**Explanation:** The lesson distinguishes between OLTP workloads (fast writes, row-oriented) and OLAP workloads (aggregate reads, column-oriented). Real-time trading is a write-heavy OLTP workload, while regulatory reporting across millions of records is a read/aggregation-heavy OLAP workload. Different problems call for different database architectures.
+Column A:
+1. Real-time trade execution
+2. End-of-month regulatory reporting across millions of records
+
+Column B:
+A. Column-oriented OLAP system
+B. Row-oriented OLTP system
+
+**Answer:** 1→B, 2→A
+**Explanation:** The lesson distinguishes between OLTP workloads (fast writes, row-oriented) and OLAP workloads (aggregate reads, column-oriented). Real-time trading is a write-heavy OLTP workload, so it maps to a row-oriented OLTP system (B). Regulatory reporting across millions of records is a read/aggregation-heavy OLAP workload, so it maps to a column-oriented OLAP system (A). Different problems call for different database architectures.
 
 Feedback:
-- A) Two OLAP systems would be optimized for reads but would struggle with the low-latency write demands of real-time trade execution.
-- C) Graph databases excel at relationship traversal, not high-throughput transactional writes or columnar aggregations across millions of records.
-- D) A single row-oriented database would handle trade execution well but would be inefficient for large-scale analytical reporting that needs to scan millions of records by column.
+- 1→B: Real-time trade execution requires fast, reliable writes — the defining characteristic of OLTP. OLAP systems are optimized for reads and would struggle with the low-latency write demands of live trading.
+- 2→A: Regulatory reporting across millions of records requires scanning and aggregating large volumes — the strength of column-oriented OLAP systems. A row-oriented system would be inefficient for this scale of analytical reporting.
 
 ---
 
-**Question 4:** You're advising a startup that processes recent user activity data in real-time but also needs to retain seven years of historical data for compliance. How would you categorize these two data tiers?
-- A) Both are "hot" data since the company owns all of it
-- B) Recent activity is "hot" or "warm" data; historical compliance data is "cold" data
-- C) Both are "cold" because compliance data dominates the volume
+**Question 4:** You're advising a startup that processes recent user activity data in real-time but also needs to retain seven years of historical data for compliance. Which of the following correctly describe the data tiers in this scenario? (Select all that apply)
+- A) Recent user activity is "hot" or "warm" data
+- B) Historical compliance data is "cold" data
+- C) Both are "hot" data since the company owns all of it
 - D) The distinction between hot and cold data only applies to cloud storage
 
-**Answer:** B) Recent activity is "hot" or "warm" data; historical compliance data is "cold" data
-**Explanation:** The lesson defines "'hot' or 'warm' data" as "focusing on more recent years and trends that are to be consumed right away for important business operations" and "'cold' data" as "more for archival usage and understanding corporate history." This maps directly to the startup's two tiers.
+**Answer:** A, B
+**Explanation:** The lesson defines "'hot' or 'warm' data" as "focusing on more recent years and trends that are to be consumed right away for important business operations" and "'cold' data" as "more for archival usage and understanding corporate history." Both A and B correctly describe the startup's two tiers.
 
 Feedback:
-- A) Ownership doesn't determine data temperature. The key factor is how frequently and urgently the data is accessed, not who owns it.
-- C) Volume alone doesn't determine temperature. Even if compliance data is larger, the recent activity data is still "hot" because it's actively consumed in real-time operations.
+- A) ✅ Recent user activity processed in real-time is "hot" or "warm" data — it's actively consumed for important business operations.
+- B) ✅ Seven years of historical compliance data is "cold" data — it's archival, rarely accessed, and retained for regulatory purposes.
+- C) Ownership doesn't determine data temperature. The key factor is how frequently and urgently the data is accessed, not who owns it.
 - D) Hot/cold distinctions apply to any storage environment — on-premise, cloud, or hybrid. It's about access patterns and recency, not infrastructure.
 
 ---
 
-**Question 5:** Your team is debating whether to self-host a PostgreSQL database on-premise or use AWS RDS. A key argument for the cloud managed service is:
-- A) It's always cheaper than self-hosting
-- B) You never touch the hardware and setup, maintenance, and patching are handled for you
+**Question 5:** Your team is debating whether to self-host a PostgreSQL database on-premise or use AWS RDS. Which of the following are advantages of using a cloud managed service like AWS RDS? (Select all that apply)
+- A) You never have to touch the hardware
+- B) Setup, maintenance, and patching are handled for you
 - C) It prevents all security vulnerabilities automatically
 - D) Cloud databases don't require any monitoring
 
-**Answer:** B) You never touch the hardware and setup, maintenance, and patching are handled for you
-**Explanation:** The lesson states: "If you choose to run a database with a cloud vendor, you'll never have to touch the hardware. Most cloud vendors also offer... managed service, which includes an easy setup and launching of the database as a service provided—in other words, you don't have to set up a server yourself, install the operating system, and so on—that all comes included."
+**Answer:** A, B
+**Explanation:** The lesson states: "If you choose to run a database with a cloud vendor, you'll never have to touch the hardware." Most cloud vendors offer managed services, which includes an easy setup and launching of the database as a service provided—in other words, you don't have to set up a server yourself, install the operating system, and so on—that all comes included.
 
 Feedback:
-- A) Cloud services aren't always cheaper — costs depend on usage patterns, scale, and configuration. The primary advantage is reduced operational burden, not guaranteed lower cost.
+- A) ✅ The lesson explicitly states you'll "never have to touch the hardware" when using a cloud vendor.
+- B) ✅ Cloud managed services handle setup, maintenance, and patching — you don't have to install the operating system, configure the server, or manage updates yourself.
 - C) Cloud services improve security posture through patching and managed infrastructure, but they don't prevent all vulnerabilities automatically. Security is a shared responsibility.
 - D) Cloud databases still require monitoring for performance, costs, and security. The cloud provider handles infrastructure-level concerns, but application-level monitoring remains your responsibility.
 
@@ -281,7 +286,7 @@ Feedback:
 - D) Switching from SQL to NoSQL
 
 **Answer:** B) Moving to a distributed system that spreads storage and processing across multiple machines
-**Explanation:** "A single-node database runs everything—storage, query planning, query execution—on one machine... A distributed system spreads those responsibilities across multiple machines. That adds complexity, but it also lets the system handle much larger workloads and datasets."
+**Explanation:** A single-node database runs everything—storage, query planning, query execution—on one machine... A distributed system spreads those responsibilities across multiple machines. That adds complexity, but it also lets the system handle much larger workloads and datasets.
 
 Feedback:
 - A) A larger monitor has no impact on database capacity or performance — it's a display device, not a computing resource.
@@ -294,20 +299,23 @@ Feedback:
 
 ### **Quiz 4: Physical & Logical Data Models**
 
-**Question 1:** A business analyst draws a diagram showing "Customer," "Order," and "Product" as boxes with lines showing relationships between them. A database engineer then translates this into PostgreSQL table definitions with column types and indexes. Which model did each person create?
-- A) Both created physical models
-- B) The analyst created a logical model; the engineer created a physical model
-- C) The analyst created a physical model; the engineer created a logical model
-- D) Neither created a model — these are just diagrams
+**Question 1:** A business analyst draws a diagram showing "Customer," "Order," and "Product" as boxes with lines showing relationships between them. A database engineer then translates this into PostgreSQL table definitions with column types and indexes. Match each role to the type of data model they created.
 
-**Answer:** B) The analyst created a logical model; the engineer created a physical model
+Column A:
+1. Business analyst (entity/relationship diagram with boxes and lines)
+2. Database engineer (PostgreSQL table definitions with column types and indexes)
 
-**Explanation:** "The logical model is the human-friendly view. It describes the entities in your domain, their attributes, and how they relate to each other." The analyst's diagram is a logical model. "The physical model is the machine-friendly view. It describes how the data is actually stored and accessed under the hood." The engineer's PostgreSQL definitions with types and indexes is closer to the physical model.
+Column B:
+A. Logical model
+B. Physical model
+
+**Answer:** 1→A, 2→B
+
+**Explanation:** As per our lesson, the logical model is the human-friendly view. It describes the entities in your domain, their attributes, and how they relate to each other. The analyst's diagram is a logical model. The physical model is the machine-friendly view. It describes how the data is actually stored and accessed under the hood. The engineer's PostgreSQL definitions with types and indexes is closer to the physical model.
 
 Feedback:
-- A) The analyst's diagram doesn't specify storage details like data types, indexes, or disk layout. It's conceptual, not physical.
-- C) This reverses the roles. The analyst's high-level diagram is the logical model. The engineer's implementation-specific DDL is (closer to) the physical model.
-- D) Both are models. A model is any structured representation of data. The diagram and the DDL are just at different levels of abstraction.
+- 1→A: The analyst's diagram shows entities and relationships at a conceptual level — no storage details like data types, indexes, or disk layout. This is the defining characteristic of a logical model.
+- 2→B: The engineer's PostgreSQL DDL specifies implementation details (column types, indexes, constraints) — the machine-friendly view that describes how data is actually stored. This is the physical model.
 
 ---
 
