@@ -69,7 +69,7 @@ Metadata sits between storage and the query engine, tracking the rules about our
 
 **OLTP vs OLAP: Different Workloads, Different Designs**
 
-We learned about two fundamental patterns for how databases are used:
+In this lesson, we learned about two fundamental patterns for how databases are used:
 
 **OLTP (Online Transactional Processing)** - Optimized for writing lots of data quickly and reliably. Think: recording sales, processing orders, updating accounts. Uses **row-oriented** databases like PostgreSQL or MySQL where each record is stored independently.
 
