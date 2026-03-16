@@ -1,0 +1,70 @@
+Notebook Audit Report — 2026-03-16 10:14:06
+======================================================================
+
+Pair: Lesson 1\Exercise1-Identifying-Data-Information-and-Knowledge\solution\L1 Exercise 1 Solutions.ipynb
+  vs: Lesson 1\Exercise1-Identifying-Data-Information-and-Knowledge\starter\L1 Exercise 1 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 1\Exercise2-Data-Metadata-Query-Engines\solution\L1 Exercise 2 Solutions.ipynb
+  vs: Lesson 1\Exercise2-Data-Metadata-Query-Engines\starter\L1 Exercise 2 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 1\Exercise3-OLTP-OLAP-Use-Cases\solution\L1 Exercise 3 Solutions.ipynb
+  vs: Lesson 1\Exercise3-OLTP-OLAP-Use-Cases\starter\L1 Exercise 3 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 1\Exercise4-Structured-and-Unstructured-Data\solution\L1 Exercise 4 Solutions.ipynb
+  vs: Lesson 1\Exercise4-Structured-and-Unstructured-Data\starter\L1 Exercise 4 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 1\Exercise5-Visualizing-a-Graph-with-Python\solution\L1 Exercise 5 Solutions.ipynb
+  vs: Lesson 1\Exercise5-Visualizing-a-Graph-with-Python\starter\L1 Exercise 5 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 2\Exercise1-Testing-Transactions-in-PostgreSQL\solution\L2 Exercise 1 Solutions.ipynb
+  vs: Lesson 2\Exercise1-Testing-Transactions-in-PostgreSQL\starter\L2 Exercise 1 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 2\Exercise2-Creating-Anomalies\solution\L2 Exercise 2 Solutions.ipynb
+  vs: Lesson 2\Exercise2-Creating-Anomalies\starter\L2 Exercise 2 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 2\Exercise3-Modeling-Data-for-OLAP-Use-Cases\solution\L2 Exercise 3 Solutions.ipynb
+  vs: Lesson 2\Exercise3-Modeling-Data-for-OLAP-Use-Cases\starter\L2 Exercise 3 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 2\Exercise4-Dealing-with-Flexible-Data\solution\L2 Exercise 4 Solutions.ipynb
+  vs: Lesson 2\Exercise4-Dealing-with-Flexible-Data\starter\L2 Exercise 4 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 2\Exercise5-Launching-AWS-RDS-Postgres\solution\L2 Exercise 5 Solutions.ipynb
+  vs: Lesson 2\Exercise5-Launching-AWS-RDS-Postgres\starter\L2 Exercise 5 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 3\Exercise1-Querying-MongoDB\solution\L3 Exercise 1 Solutions.ipynb
+  vs: Lesson 3\Exercise1-Querying-MongoDB\starter\L3 Exercise 1 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 3\Exercise2-Creating-Collections-and-NoSQL-Data-Modeling\solution\L3 Exercise 2 Solutions.ipynb
+  vs: Lesson 3\Exercise2-Creating-Collections-and-NoSQL-Data-Modeling\starter\L3 Exercise 2 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 3\Exercise3-NoSQL-on-AWS\solution\L3 Exercise 3 Solutions.ipynb
+  vs: Lesson 3\Exercise3-NoSQL-on-AWS\starter\L3 Exercise 3 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 4\Exercise1-Getting-started-with-Neo4j\solution\L4 Exercise 1 Solutions.ipynb
+  vs: Lesson 4\Exercise1-Getting-started-with-Neo4j\starter\L4 Exercise 1 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 4\Exercise2-Creating-and-populating-graphs-in-Neo4j\solution\L4 Exercise 2 Solutions.ipynb
+  vs: Lesson 4\Exercise2-Creating-and-populating-graphs-in-Neo4j\starter\L4 Exercise 2 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+Pair: Lesson 4\Exercise3-Graph-Databases-on-AWS\solution\L4 Exercise 3 Solutions.ipynb
+  vs: Lesson 4\Exercise3-Graph-Databases-on-AWS\starter\L4 Exercise 3 Starter.ipynb
+  ✓ Clean — no unexpected differences
+
+======================================================================
+SUMMARY: 16 pairs checked, 16 clean, 0 with issues (0 total issues)
+======================================================================
