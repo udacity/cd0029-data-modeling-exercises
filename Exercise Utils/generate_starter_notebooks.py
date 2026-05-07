@@ -145,5 +145,7 @@ if __name__ == '__main__':
     import sys
     
     # Allow passing root directory as command line argument
-    root_dir = sys.argv[1] if len(sys.argv) > 1 else '.'
+    # Default: repo root (one level up from Exercise Utils)
+    default_root = str(Path(__file__).parent.parent)
+    root_dir = sys.argv[1] if len(sys.argv) > 1 else default_root
     main(root_dir)

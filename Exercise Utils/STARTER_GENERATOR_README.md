@@ -48,7 +48,7 @@ Given this structure:
 Lesson 1/
   Exercise1/
     solution/
-      L1 Exercise 1 Solutions DRAFT.ipynb
+      L1 Exercise 1 Solutions.ipynb
 ```
 
 The script will create:
@@ -56,9 +56,9 @@ The script will create:
 Lesson 1/
   Exercise1/
     solution/
-      L1 Exercise 1 Solutions DRAFT.ipynb
+      L1 Exercise 1 Solutions.ipynb
     starter/
-      L1 Exercise 1 Starter DRAFT.ipynb    ← Generated!
+      L1 Exercise 1 Starter.ipynb    ← Generated!
 ```
 
 ## Requirements
